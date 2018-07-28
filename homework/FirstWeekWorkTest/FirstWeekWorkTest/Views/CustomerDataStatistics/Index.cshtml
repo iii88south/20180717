@@ -1,0 +1,63 @@
+﻿@*@model IEnumerable<FirstWeekWorkTest.Models.CustomerDatastatistics>*@
+
+@model IPagedList<FirstWeekWorkTest.Models.CustomerDatastatistics>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "客戶資訊-統計資料";    
+}
+
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+<h2>客戶資訊-統計資料</h2>
+
+
+<table class="table">
+    <tr>
+        <th style="border: 2px solid black; text-align: center; width: 12%">
+            @Html.ActionLink("客戶ID", "Index",
+        new { sortOrder = "客戶ID", CurrentSort = ViewBag.CurrentSort })
+        </th>
+
+        <th style="border: 2px solid black; text-align: center; width: 12%">
+            @Html.ActionLink("客戶名稱", "Index",
+        new { sortOrder = "客戶名稱", CurrentSort = ViewBag.CurrentSort })
+        </th>
+
+        <th style="border: 2px solid black; text-align: center; width: 12%">
+            @Html.ActionLink("聯絡人數量", "Index",
+        new { sortOrder = "聯絡人數量", CurrentSort = ViewBag.CurrentSort })
+        </th>
+        <th style="border: 2px solid black; text-align: center; width: 12%">
+            @Html.ActionLink("銀行帳戶數量", "Index",
+        new { sortOrder = "銀行帳戶數量", CurrentSort = ViewBag.CurrentSort })
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="border: 2px solid black; text-align: center; word-wrap: break-word;">
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td style="border: 2px solid black; text-align: center; word-wrap: break-word;">
+                @Html.DisplayFor(modelItem => item.客戶名稱)
+            </td>
+            <td style="border: 2px solid black; text-align: center; word-wrap: break-word;">
+                @Html.DisplayFor(modelItem => item.聯絡人數量)
+            </td>
+            <td style="border: 2px solid black; text-align: center; word-wrap: break-word;">
+                @Html.DisplayFor(modelItem => item.銀行帳戶數量)
+            </td>
+        </tr>
+    }
+
+</table>
+<div id='Paging' style="text-align: center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>  

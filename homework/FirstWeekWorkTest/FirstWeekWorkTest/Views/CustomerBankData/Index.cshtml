@@ -1,0 +1,100 @@
+﻿@*@model IEnumerable<FirstWeekWorkTest.Models.客戶銀行資訊>*@
+
+@model IPagedList<FirstWeekWorkTest.Models.客戶銀行資訊>
+@using PagedList;
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "客戶銀行資訊";
+}
+
+
+<script type="text/javascript">
+    function exportExcel() {
+
+        $.ajax({
+            url: "@Url.Action("ExportCustomerBankDatasExcel")",
+            success: function (response, textStatus, jqXHR) {
+                window.location.href = '@Url.Action("ExportCustomerBankDatasExcel", "CustomerBankData")';
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            }
+        });
+    }
+</script>
+
+<div>
+    <button type="button" onclick="exportExcel()">輸出Excel</button>
+</div>
+
+
+
+<h2></h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().銀行名稱)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().銀行代碼)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().分行代碼)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().帳戶名稱)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().帳戶號碼)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().客戶資料.客戶名稱)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @Html.HiddenFor(model => model.FirstOrDefault().Id)
+            <td>
+                @Html.DisplayFor(modelItem => item.銀行名稱)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.銀行代碼)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.分行代碼)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.帳戶名稱)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.帳戶號碼)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.客戶資料.客戶名稱)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div id='Paging' style="text-align: center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>

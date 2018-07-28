@@ -1,0 +1,47 @@
+﻿@*Handle error 方法:
+        第一步要在在 Web.config 裡的 <system.web> 的底下新增  <customErrors mode="On">
+    </customErrors>*@
+@*custom errors 提供了三個模式：
+
+    On：當有錯誤發生時就顯示我們自訂的頁面。
+    Off：當有錯誤發生時就顯示預設的頁面，就是上面那個黃色的頁面。
+    RemoteOnly：如果是從主機連上去，就顯示預設的錯誤頁面，
+        這是為了幫助開發者Debug。如果是 User 從其他地方連的，就顯示自訂的頁面給他們看。*@
+
+
+
+@model HandleErrorInfo
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>錯誤</title>
+</head>
+<body>
+    <hgroup>
+        <h1>錯誤。</h1>
+        <h2>處理您的要求時發生錯誤。</h2>
+        <hr/>
+        @{
+            var ex = Model.Exception as System.Data.Entity.Validation.DbEntityValidationException;
+            List<string> errors = new List<string>();
+            foreach (var vError in ex.EntityValidationErrors)
+            {
+                foreach (var err in vError.ValidationErrors)
+                {
+                    errors.Add(err.PropertyName + ": " + err.ErrorMessage);
+                }
+            }
+
+        }
+        <ol>
+            @foreach (var item in errors)
+            {
+                <li>@item</li>
+            }
+        </ol>
+
+    </hgroup>
+</body>
+</html>

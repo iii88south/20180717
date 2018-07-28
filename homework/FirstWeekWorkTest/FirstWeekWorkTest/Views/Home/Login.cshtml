@@ -1,0 +1,25 @@
+﻿
+
+@Banner()
+
+@helper Banner()
+{
+    <div class="jumbotron">
+        <h2>Member Login System</h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @using (Html.BeginForm("Login", "Home", FormMethod.Post, null))
+        {
+            <div class="form-group">
+                <label for="email">Account:</label>
+                <input type="text" class="form-control" id="帳號" placeholder="Enter Account" name="帳號">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="密碼" placeholder="Enter password" name="密碼">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        }
+    </div>
+  
+}
+

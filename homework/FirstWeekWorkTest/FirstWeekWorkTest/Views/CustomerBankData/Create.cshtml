@@ -1,0 +1,83 @@
+﻿@model FirstWeekWorkTest.Models.客戶銀行資訊
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>客戶銀行資訊-新增頁</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @*<h4>客戶銀行資訊</h4>*@
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.客戶Id, "客戶名稱:")
+            <div >
+                @Html.DropDownList("客戶Id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.客戶Id, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.銀行名稱, "銀行名稱:")
+            <div >
+                @Html.EditorFor(model => model.銀行名稱)
+                @Html.ValidationMessageFor(model => model.銀行名稱, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.銀行代碼, "銀行代碼:")
+            <div >
+                @Html.EditorFor(model => model.銀行代碼)
+                @Html.ValidationMessageFor(model => model.銀行代碼, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.分行代碼, "分行名稱:")
+            <div >
+                @Html.EditorFor(model => model.分行代碼)
+                @Html.ValidationMessageFor(model => model.分行代碼, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.帳戶名稱, "帳戶名稱:")
+            <div >
+                @Html.EditorFor(model => model.帳戶名稱)
+                @Html.ValidationMessageFor(model => model.帳戶名稱, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.帳戶號碼, "帳戶號碼:")
+            <div >
+                @Html.EditorFor(model => model.帳戶號碼)
+                @Html.ValidationMessageFor(model => model.帳戶號碼, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section breadcrumb{
+    <li>@Html.ActionLink("目前頁面-客戶銀行資訊", "Index", "CustomerBankData", null, new { @style = "font-weight: bold;color:red" })</li>
+}

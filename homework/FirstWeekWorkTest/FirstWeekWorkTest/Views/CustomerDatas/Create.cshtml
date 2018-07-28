@@ -1,0 +1,104 @@
+﻿@model FirstWeekWorkTest.Models.客戶資料
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>客戶資料</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.客戶分類)
+        <div class="col-md-10">
+            @Html.DropDownList("Category", (IEnumerable<SelectListItem>)ViewBag.CategoryItems)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.客戶名稱)
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.客戶名稱)
+            @Html.ValidationMessageFor(model => model.客戶名稱, "", new { @class = "text-danger" })
+        </div>
+    </div>   
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.帳號)
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.帳號)
+            @Html.ValidationMessageFor(model => model.帳號, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.密碼)
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.密碼)
+            @Html.ValidationMessageFor(model => model.密碼, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.統一編號)
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.統一編號)
+            @Html.ValidationMessageFor(model => model.統一編號, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.電話)
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.電話)
+            @Html.ValidationMessageFor(model => model.電話, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.傳真)
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.傳真)
+            @Html.ValidationMessageFor(model => model.傳真, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.地址)
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.地址)
+            @Html.ValidationMessageFor(model => model.地址, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email)
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

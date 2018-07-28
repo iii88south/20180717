@@ -1,0 +1,133 @@
+﻿@model FirstWeekWorkTest.Models.客戶資料
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>客戶資料</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div>
+            @Html.LabelFor(model => model.客戶分類)
+            <div>
+                @*@Html.DropDownList("客戶Id", null, "--請選擇評價等級--", new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.客戶分類, (SelectList)ViewBag.category, "select", new { disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.客戶分類, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div>
+            @Html.LabelFor(model => model.客戶名稱)
+            <div>
+                @Html.EditorFor(model => model.客戶名稱, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => model.客戶名稱, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.帳號)
+            <div>
+                @Html.EditorFor(model => model.帳號)
+                @Html.ValidationMessageFor(model => model.帳號, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div >
+            @Html.LabelFor(model => model.密碼)
+            <div>
+                @Html.EditorFor(model => model.密碼, new { htmlAttributes = new { @id = "密碼", @type = "password" } })
+                @Html.ValidationMessageFor(model => model.密碼, "", new { @class = "text-danger" })
+
+                
+            </div>           
+
+        </div>
+
+        <div>
+            <input type="checkbox" id="apparentPwd" name="feature" value="0" />
+            <label for="horns">顯示密碼</label>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.統一編號)
+            <div>
+                @Html.EditorFor(model => model.統一編號)
+                @Html.ValidationMessageFor(model => model.統一編號, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.電話)
+            <div>
+                @Html.EditorFor(model => model.電話, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.電話, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.傳真)
+            <div>
+                @Html.EditorFor(model => model.傳真, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.傳真, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.地址)
+            <div>
+                @Html.EditorFor(model => model.地址, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.地址, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email)
+            <div>
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script>
+        $("#apparentPwd").change(function () {
+            if (this.checked) {               
+                $("#密碼").prop('type', 'text');
+            }
+            else {                
+                $("#密碼").prop('type', 'password');
+            }
+        });        
+    </script>
+
+}
+
+
+

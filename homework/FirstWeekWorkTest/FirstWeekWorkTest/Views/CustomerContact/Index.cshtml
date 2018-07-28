@@ -1,0 +1,129 @@
+﻿@*@model IEnumerable<FirstWeekWorkTest.Models.客戶聯絡人>*@
+@model IPagedList<FirstWeekWorkTest.Models.客戶聯絡人>
+@using PagedList;
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "客戶聯絡人列表";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+
+@using (Html.BeginForm("SearchForCustomerContact", "CustomerContact", FormMethod.Get, null))
+{
+    <label>客戶聯絡人姓名:</label>
+    @Html.TextBox("SearchContactName", null, new { @class = "form-control", placeholder = "請輸入客戶聯絡人姓名" })
+    <label>客戶職稱:</label>
+    @Html.DropDownList("SearchJobTitle", (IEnumerable<SelectListItem>)ViewBag.JobTitlesItems)
+    <input type="submit" value="查詢">
+}
+
+
+<div><button type="button" onclick="exportExcel()">輸出客戶聯絡人Excel</button></div>
+
+<script type="text/javascript">
+    function exportExcel() {
+
+        $.ajax({
+            url: "@Url.Action("CusContactExport")",
+            success: function (response, textStatus, jqXHR) {
+                window.location.href = '@Url.Action("CusContactExport", "CustomerContact")';
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            }
+        });
+    }
+</script>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@*null 那段參數是routevalue*@
+
+@using (Html.BeginForm("BatchUpdate", "CustomerContact"))
+{
+
+    <table class="table">
+        <tr align="center" style="background-color:dodgerblue;">
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().客戶資料.客戶名稱)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().職稱)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().姓名)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().手機)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().電話)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @{
+            //轉型成array;
+            var datas = Model.ToArray();
+        }
+
+        @for (var i = 0; i < datas.Length; i++)
+        {
+            <tr align="center">
+                @Html.HiddenFor(modelItem => datas[i].Id)
+
+                <td>
+                     @Html.DisplayFor(modelItem => datas[i].客戶資料.客戶名稱)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => datas[i].職稱)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => datas[i].姓名)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => datas[i].Email)
+                    @Html.ValidationMessageFor(model => datas[i].Email, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => datas[i].手機)
+                    @Html.ValidationMessageFor(model => datas[i].手機, "", new { @class = "text-danger" })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => datas[i].電話)
+                    @Html.ValidationMessageFor(model => datas[i].電話, "", new { @class = "text-danger" })
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = datas[i].Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = datas[i].Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = datas[i].Id })
+                </td>
+            </tr>
+        }
+
+
+    </table>
+
+    
+
+    <input type="submit" value="批示更新送出" />
+}
+
+    <div id='Paging' style="text-align: center">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>
